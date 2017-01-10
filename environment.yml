@@ -1,0 +1,8 @@
+name: chores
+dependencies:
+- python=3.5
+- django=1.10.4
+- python-dotenv=0.6.1
+- pip:
+  - py-moneyed
+  - django-money
