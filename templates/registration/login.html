@@ -5,16 +5,13 @@
 
 <div class="container">
   <div class="row">
-    {% bootstrap_form_errors form %}
-  </div>
-  <div class="row">
     <div class="col-md-6 col-md-offset-3">
       <form method="post" action="{% url 'login' %}" class="form">
         {% csrf_token %}
         {% bootstrap_form form layout='horizontal' %}
         {% buttons submit='Login' %}
+        <input type="hidden" name="next" value="{{ next }}" />
         {% endbuttons %}
-        <!-- <input type="hidden" name="next" value="{{ next }}" /> -->
       </form>
     </div>
   </div>
