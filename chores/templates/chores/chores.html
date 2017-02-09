@@ -6,8 +6,9 @@
 <div class="container">
   <div class="row">
     <div class="jumbotron">
-      <h1>Hello, world.</h1>
-      <h3>You're at the chores app. Enjoy 😃</h3>
+      <h1>Hello, {{ user.first_name }}.</h1>
+      <h2>You can earn <b>{{ assigned_chores.possible_earnings_per_week }}</b> this week! 😃</h2>
+      <h3>Your chores are: <b>{{ assigned_chores.active_chores }}</b></h3>
     </div>
   </div>
 </div>

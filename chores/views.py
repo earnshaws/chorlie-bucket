@@ -1,7 +1,7 @@
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import View
+from django.views.generic import TemplateView
+from .models import AssignedChores
 
 
 class LoggedInMixin(object):
@@ -11,7 +11,13 @@ class LoggedInMixin(object):
         return super(LoggedInMixin, self).dispatch(*args, **kwargs)
 
 
-class IndexView(LoggedInMixin, View):
+class IndexView(LoggedInMixin, TemplateView):
 
-    def get(self, request, *args, **kwargs):
-        return render(request, 'chores/chores.html')
+    template_name = 'chores/chores.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        user = self.request.user
+        assigned_chores = AssignedChores.objects.filter(user=user).first()
+        context['assigned_chores'] = assigned_chores
+        return context
