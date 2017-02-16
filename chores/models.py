@@ -1,4 +1,4 @@
-from djmoney.models.fields import MoneyField
+from djmoney.models.fields import MoneyField, MoneyPatched
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -33,8 +33,8 @@ class AssignedChores(models.Model):
         verbose_name_plural = 'assigned chores'
 
     def _possible_earnings_per_week(self):
-        earnings = 0.
-        hourly_earnings = 0.
+        earnings = MoneyPatched(0, 'USD')
+        hourly_earnings = MoneyPatched(0, 'USD')
         for chore in self.chores.filter(active=True):
             if chore.frequency == chore.DAILY:
                 earnings += 7 * chore.value
@@ -47,7 +47,8 @@ class AssignedChores(models.Model):
     possible_earnings_per_week = property(_possible_earnings_per_week)
 
     def _active_chores(self):
-        return ', '.join(sorted(map(lambda x: x.name, self.chores.filter(active=True))))
+        return ', '.join(sorted(map(lambda x: x.name,
+                                    self.chores.filter(active=True))))
     active_chores = property(_active_chores)
 
 
